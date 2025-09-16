@@ -1,0 +1,47 @@
+============================================================
+EKF Data Analysis Report
+============================================================
+
+Log File: /home/aalto-pi-01/RoboMaster_S1_EKF/data/iphone_ekf_log_20250812_150708.csv
+Analysis Date: 2025-08-12 15:12:03.703384
+
+----------------------------------------
+Basic Statistics
+----------------------------------------
+Duration: 107.90 seconds
+Samples: 1171
+Sample Rate: 10.85 Hz
+Total Distance: 32.27 meters
+
+Position Range:
+  X: [-6.78, 2.11] meters
+  Y: [-4.93, 0.50] meters
+  Z: [3.09, 3.51] meters
+
+Orientation Statistics:
+  Roll:
+    Mean: -126.90°
+    Std: 106.12°
+    Range: [-180.00°, 179.98°]
+  Pitch:
+    Mean: 0.44°
+    Std: 24.71°
+    Range: [-87.75°, 82.31°]
+  Yaw:
+    Mean: 120.04°
+    Std: 6.97°
+    Range: [96.40°, 134.72°]
+
+Sensor Noise (Stationary):
+  accel_x_std: 2.196522
+  accel_y_std: 2.748936
+  accel_z_std: 2.767922
+  gyro_x_std: 0.187652
+  gyro_y_std: 0.183634
+  gyro_z_std: 0.130941
+
+Covariance Analysis:
+  Initial: 1.642958
+  Final: 0.123531
+  Mean: 0.135965
+  Converged: True

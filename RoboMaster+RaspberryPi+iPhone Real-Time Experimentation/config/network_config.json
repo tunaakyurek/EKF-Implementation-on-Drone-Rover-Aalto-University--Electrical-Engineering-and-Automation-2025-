@@ -1,0 +1,7 @@
+{
+  "ground_pc_ip": "192.168.1.100",
+  "port": 5555,
+  "max_queue_size": 1000,
+  "communication_rate": 100,
+  "timeout": 5.0
+}

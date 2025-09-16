@@ -1,0 +1,31 @@
+RoboMaster EKF Analysis Report
+==================================================
+Generated: 2025-09-05 14:09:34
+Data file: 1375 samples
+Duration: 28.9 seconds
+Sample rate: 47.6 Hz
+
+State Vector: [x, y, theta, vx, vy, bias_accel_x, bias_accel_y, bias_angular_velocity]
+
+Position Analysis:
+  x_range: 7.1940
+  y_range: 2.1609
+  total_distance: 8.7984
+  max_distance_from_origin: 5.3909
+
+Velocity Analysis:
+  max_vx: 0.0003
+  max_vy: 0.0291
+  max_speed: 0.0373
+  avg_speed: 0.0104
+
+Orientation Analysis:
+  theta_range_deg: 57.0180
+  max_angular_change: 11.5281
+
+Bias Analysis:
+  final_bias_accel_x: -1.072040
+  final_bias_accel_y: -0.534989
+  final_bias_angular: 0.000000
+  bias_convergence_x: 0.000000
+  bias_convergence_y: 0.000000

@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- 15-DOF EKF Fusion Launch File -->
+  
+  <!-- Arguments -->
+  <arg name="use_sim_time" default="false"/>
+  <arg name="config_file" default="$(find iphone_ekf_fusion)/config/ekf_params.yaml"/>
+  <arg name="enable_visualization" default="true"/>
+  <arg name="enable_recording" default="false"/>
+  <arg name="bag_file" default="/tmp/ekf_data.bag"/>
+  
+  <!-- Set use_sim_time parameter -->
+  <param name="use_sim_time" value="$(arg use_sim_time)"/>
+  
+  <!-- Load EKF parameters -->
+  <rosparam file="$(arg config_file)" command="load"/>
+  
+  <!-- Start iPhone sensor driver -->
+  <node name="iphone_sensor_driver" pkg="iphone_sensor_driver" type="iphone_sensor_node.py" output="screen">
+    <param name="connection_type" value="udp"/>
+    <param name="port" value="5555"/>
+    <param name="auto_calibrate" value="true"/>
+    <param name="calibration_samples" value="200"/>
+  </node>
+  
+  <!-- Start 15-DOF EKF node -->
+  <node name="ekf_15dof" pkg="iphone_ekf_fusion" type="ekf_15dof_node.py" output="screen">
+    <param name="predict_rate" value="50.0"/>
+    
+    <!-- Process noise parameters -->
+    <param name="q_position" value="0.01"/>
+    <param name="q_velocity" value="0.1"/>
+    <param name="q_orientation" value="0.05"/>
+    <param name="q_angular_velocity" value="0.1"/>
+    <param name="q_accel_bias" value="0.001"/>
+    
+    <!-- Measurement noise parameters -->
+    <param name="r_accelerometer" value="0.5"/>
+    <param name="r_gyroscope" value="0.1"/>
+    <param name="r_magnetometer" value="0.5"/>
+    <param name="r_gps" value="1.0"/>
+    <param name="r_barometer" value="0.1"/>
+    
+    <!-- Initial covariance -->
+    <param name="initial_position_cov" value="1.0"/>
+    <param name="initial_velocity_cov" value="0.5"/>
+    <param name="initial_orientation_cov" value="0.1"/>
+    <param name="initial_angular_velocity_cov" value="0.1"/>
+    <param name="initial_accel_bias_cov" value="0.01"/>
+    
+    <!-- Physical constants -->
+    <param name="gravity" value="9.81"/>
+    <param name="magnetic_declination" value="0.0"/>
+  </node>
+  
+  <!-- Visualization (optional) -->
+  <group if="$(arg enable_visualization)">
+    <!-- RViz -->
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find iphone_ekf_fusion)/config/ekf_visualization.rviz"/>
+    
+    <!-- Custom visualizer -->
+    <node name="ekf_visualizer" pkg="iphone_ekf_fusion" type="ekf_visualizer.py" output="screen">
+      <param name="update_rate" value="10.0"/>
+    </node>
+    
+    <!-- Performance monitor -->
+    <node name="performance_monitor" pkg="iphone_ekf_fusion" type="performance_monitor.py" output="screen">
+      <param name="window_size" value="100"/>
+    </node>
+  </group>
+  
+  <!-- Data recording (optional) -->
+  <group if="$(arg enable_recording)">
+    <node name="rosbag_record" pkg="rosbag" type="record" 
+          args="-o $(arg bag_file) 
+                /iphone/sensor_data
+                /ekf_15dof/ekf_state
+                /ekf_15dof/odom
+                /tf
+                /tf_static"/>
+  </group>
+  
+</launch>

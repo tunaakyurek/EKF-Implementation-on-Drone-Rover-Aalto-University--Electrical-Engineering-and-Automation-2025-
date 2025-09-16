@@ -1,0 +1,55 @@
+###############################################
+# Python dependencies for the full project
+# - Covers BOTH non-ROS (standalone) pipeline and
+#   ROS Noetic-based pipeline on Raspberry Pi
+# - Only pip-installable packages are listed here
+# - ROS core packages (rospy, sensor_msgs, etc.)
+#   must be installed via apt/rosdep (see notes below)
+# - Compatible with Python 3.11.2
+###############################################
+
+# Core scientific stack (used by EKF, analysis, visualization)
+# Compatible with Python 3.11.2 and Raspberry Pi (piwheels)
+numpy>=1.24.0,<1.25.0
+scipy>=1.10.0,<1.12.0
+matplotlib>=3.7.0,<3.8.0
+pandas>=2.0.0,<2.1.0
+
+# Communication and device I/O
+pyzmq==25.1.0
+pyserial==3.5
+
+# Computer vision (used in analysis/plots; GUI-enabled build)
+# On headless Raspberry Pi, consider installing:
+#   opencv-python-headless==4.7.0.72
+opencv-python==4.7.1.72
+
+# RoboMaster SDK (for direct S1 interactions when used)
+robomaster==0.1.1.46
+
+# ROS-adjacent Python utilities (pip-installable; complement apt packages)
+rospkg==1.5.0
+catkin_pkg==0.5.2
+empy==3.3.4
+defusedxml==0.7.1
+PyYAML==6.0.1
+
+###############################################
+# ROS Noetic (apt/rosdep) install notes (not pip)
+# Install these via apt/rosdep on the Raspberry Pi:
+#   - ros-noetic-rospy
+#   - ros-noetic-geometry-msgs
+#   - ros-noetic-sensor-msgs
+#   - ros-noetic-nav-msgs
+#   - ros-noetic-tf2-ros
+#   - ros-noetic-tf2-geometry-msgs
+#   - ros-noetic-visualization-msgs
+#   - ros-noetic-message-generation
+#   - ros-noetic-message-runtime
+# Example:
+#   sudo apt update && sudo apt install -y \
+#     ros-noetic-rospy ros-noetic-geometry-msgs ros-noetic-sensor-msgs \
+#     ros-noetic-nav-msgs ros-noetic-tf2-ros ros-noetic-tf2-geometry-msgs \
+#     ros-noetic-visualization-msgs ros-noetic-message-generation \
+#     ros-noetic-message-runtime
+###############################################

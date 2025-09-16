@@ -1,0 +1,144 @@
+{
+  "raw_file": "iphone_integration/data\\robomaster_raw_log_20250916_113759.csv",
+  "online_ekf_file": "iphone_integration/data\\robomaster_ekf_log_20250916_113759.csv",
+  "offline_ekf_file": "iphone_integration/data\\robomaster_ekf_log_20250916_113759_offline8dof.csv",
+  "pre_delay_s": 5.0,
+  "calibration_duration_s": 5.0,
+  "online_metrics": {
+    "gyro_theta_rate_correlation": 0.08164828774666971,
+    "gyro_theta_rate_sign": 1.0,
+    "corners_count": 3,
+    "corner_integrals_rad": [
+      1.5162815557250977,
+      1.5237139533321857,
+      1.555771483150482
+    ],
+    "corner_theta_changes_rad": [
+      1.550387769497168,
+      1.5688241807904753,
+      1.5422418967913654
+    ],
+    "corner_errors_rad": [
+      0.03410621377207024,
+      0.04511022745828974,
+      -0.01352958635911694
+    ],
+    "corner_mean_abs_error_deg": 1.7713186491603066,
+    "straight_segments": [
+      {
+        "t_start": 0.01916193962097168,
+        "t_end": 2.4020626544952393,
+        "mean_abs_deg": 32.24312504865999,
+        "median_abs_deg": 33.220848206211585
+      },
+      {
+        "t_start": 3.4508004188537598,
+        "t_end": 5.125013828277588,
+        "mean_abs_deg": 161.71117767209896,
+        "median_abs_deg": 171.76253051718328
+      },
+      {
+        "t_start": 6.1912031173706055,
+        "t_end": 7.902400732040405,
+        "mean_abs_deg": 48.62500567214474,
+        "median_abs_deg": 48.206933781275616
+      },
+      {
+        "t_start": 8.985572814941406,
+        "t_end": 12.607325792312622,
+        "mean_abs_deg": 140.95863782637343,
+        "median_abs_deg": 177.4587547326122
+      }
+    ],
+    "mag_health": {
+      "available": 1,
+      "mag_norm_median": 188.76042385521077,
+      "mag_norm_mad": 0.20469303701102604,
+      "heading_residual_mean_deg": 11.511373874610547,
+      "heading_residual_mad_deg": 109.60204594267282,
+      "pct_heading_gated": 94.78991596638654,
+      "pct_norm_gated": 16.974789915966387
+    },
+    "stationary_bias": {
+      "accel_x_mean": -0.1353529114468085,
+      "accel_x_std": 0.6783045975313369,
+      "accel_y_mean": 0.2705445214468086,
+      "accel_y_std": 1.080401836930315,
+      "gyro_z_mean": 0.33668502553191487,
+      "gyro_z_std": 0.6308872399068643
+    }
+  },
+  "offline_metrics": {
+    "gyro_theta_rate_correlation": -0.07545588091927952,
+    "gyro_theta_rate_sign": -1.0,
+    "corners_count": 4,
+    "corner_integrals_rad": [
+      1.5540795390825726,
+      1.4967695562416705,
+      1.515817823109839,
+      1.5534303733437083
+    ],
+    "corner_theta_changes_rad": [
+      1.3466214131279628,
+      1.4279217833213025,
+      1.448598450648313,
+      1.5245053593556381
+    ],
+    "corner_errors_rad": [
+      -0.20745812595460977,
+      -0.06884777292036803,
+      -0.0672193724615262,
+      -0.028925013988070347
+    ],
+    "corner_mean_abs_error_deg": 5.334957356885353,
+    "straight_segments": [
+      {
+        "t_start": 0.016439000028185546,
+        "t_end": 9.150060000014491,
+        "mean_abs_deg": 2.2984904610213923,
+        "median_abs_deg": 1.2586581653388929
+      },
+      {
+        "t_start": 10.26928400003817,
+        "t_end": 12.467759000021033,
+        "mean_abs_deg": 13.758864165634069,
+        "median_abs_deg": 3.6496828042472105
+      },
+      {
+        "t_start": 13.50703999993857,
+        "t_end": 15.185875999974087,
+        "mean_abs_deg": 26.952574428777563,
+        "median_abs_deg": 7.416231831385522
+      },
+      {
+        "t_start": 16.265126999933276,
+        "t_end": 17.963946999982,
+        "mean_abs_deg": 32.631919376365786,
+        "median_abs_deg": 16.071709270168153
+      },
+      {
+        "t_start": 19.043197999941185,
+        "t_end": 22.680680999998003,
+        "mean_abs_deg": 27.483240748562263,
+        "median_abs_deg": 5.773224436865417
+      }
+    ],
+    "mag_health": {
+      "available": 1,
+      "mag_norm_median": 188.3832298022893,
+      "mag_norm_mad": 8.900974142671586,
+      "heading_residual_mean_deg": -23.29617751296766,
+      "heading_residual_mad_deg": 13.130612311911246,
+      "pct_heading_gated": 34.786641929499076,
+      "pct_norm_gated": 20.408163265306122
+    },
+    "stationary_bias": {
+      "accel_x_mean": 0.07447731731404957,
+      "accel_x_std": 0.006622598731210895,
+      "accel_y_mean": 0.3249389406198347,
+      "accel_y_std": 0.008771484960159117,
+      "gyro_z_mean": 0.0040752148760330575,
+      "gyro_z_std": 0.0010381981745775028
+    }
+  }
+}

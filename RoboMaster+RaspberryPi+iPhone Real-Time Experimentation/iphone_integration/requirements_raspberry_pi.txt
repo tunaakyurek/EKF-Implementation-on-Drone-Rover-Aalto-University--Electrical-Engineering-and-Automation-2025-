@@ -1,0 +1,34 @@
+###############################################
+# iPhone Integration - Raspberry Pi Requirements
+# For Python 3.11.x on Raspberry Pi OS
+# These versions are available on piwheels.org
+###############################################
+
+# Core scientific computing (piwheels compatible)
+numpy>=1.24.0,<1.25.0        # Array operations and linear algebra (1.24.2 available)
+scipy>=1.10.0,<1.12.0        # Scientific computing (multiple versions available)
+
+# Data analysis and visualization
+matplotlib>=3.7.0,<3.8.0     # Plotting and visualization
+pandas>=2.0.0,<2.1.0         # Data analysis and CSV handling
+
+# Alternative: Use exact versions known to be on piwheels
+# numpy==1.24.2
+# scipy==1.11.4  
+# matplotlib==3.7.2
+# pandas==2.0.3
+
+# Installation notes for Raspberry Pi:
+# 1. piwheels is automatically used on Raspberry Pi OS
+# 2. These are pre-compiled wheels optimized for ARM architecture
+# 3. Much faster installation than compiling from source
+
+# System package alternative (often faster on Pi):
+# sudo apt update
+# sudo apt install python3-numpy python3-scipy python3-matplotlib python3-pandas
+
+# For headless Raspberry Pi (no display):
+# Set matplotlib backend before importing:
+# import matplotlib
+# matplotlib.use('Agg')
+# import matplotlib.pyplot as plt

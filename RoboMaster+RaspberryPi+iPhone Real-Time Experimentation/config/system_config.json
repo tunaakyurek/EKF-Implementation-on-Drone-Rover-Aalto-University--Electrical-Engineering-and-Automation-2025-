@@ -1,0 +1,14 @@
+{
+  "sensor_frequency": 50,
+  "log_directory": "logs",
+  "enable_network": true,
+  "enable_logging": true,
+  "calibrate_imu": false,
+  "ekf_params": {
+    "process_noise_scale": 1.0,
+    "measurement_noise_scale": 1.0,
+    "initial_position_uncertainty": 1.0,
+    "initial_velocity_uncertainty": 0.1,
+    "initial_orientation_uncertainty": 0.1
+  }
+}

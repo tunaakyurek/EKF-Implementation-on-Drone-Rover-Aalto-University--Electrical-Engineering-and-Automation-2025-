@@ -1,0 +1,152 @@
+{
+  "system": {
+    "name": "iPhone-EKF Integration System",
+    "version": "1.0.0",
+    "description": "RoboMaster S1 autonomous navigation using iPhone sensors and 8-DOF EKF"
+  },
+  
+  "iphone_receiver": {
+    "connection_type": "udp",
+    "port": 5555,
+    "timeout": 5.0,
+    "buffer_size": 4096,
+    "max_queue_size": 100,
+    "data_format": "json",
+    "calibration": {
+      "duration": 5.0,
+      "min_samples": 100,
+      "auto_calibrate": true,
+      "pre_start_delay_seconds": 5.0
+    }
+  },
+  
+  "ekf_8dof": {
+    "state_dimensions": 8,
+    "coordinate_frame": "NED",
+    "update_rate": 50,
+    "process_noise": {
+      "q_position": 0.01,
+      "q_velocity": 0.1,
+      "q_orientation": 0.05,
+      "q_angular_velocity": 0.1
+    },
+    "measurement_noise": {
+      "r_accel": 0.5,
+      "r_gyro": 0.1,
+      "r_mag": 0.5,
+      "r_gps": 1.0,
+      "r_baro": 0.1,
+      "r_chassis": 0.05
+    },
+    "physical_constants": {
+      "gravity": 9.81,
+      "magnetic_declination": 0.0
+    },
+    "initial_covariance": {
+      "position": 1.0,
+      "velocity": 0.5,
+      "orientation": 0.1,
+      "angular_velocity": 0.1
+    },
+    "use_drone_velocity": false
+  },
+  
+  "autonomous_control": {
+    "control_rate": 20,
+    "max_velocity": 1.0,
+    "max_yaw_rate": 1.57,
+    "max_acceleration": 0.5,
+    "pid_gains": {
+      "position": {
+        "kp": 1.2,
+        "ki": 0.1,
+        "kd": 0.3
+      },
+      "altitude": {
+        "kp": 1.5,
+        "ki": 0.2,
+        "kd": 0.3
+      },
+      "yaw": {
+        "kp": 2.0,
+        "ki": 0.1,
+        "kd": 0.3
+      }
+    },
+    "waypoint_defaults": {
+      "tolerance": 0.2,
+      "speed": 0.5,
+      "hold_time": 0.0
+    },
+    "safety": {
+      "enable_geofence": true,
+      "max_altitude": 3.0,
+      "max_range": 10.0,
+      "emergency_stop_enabled": true
+    }
+  },
+  
+  "data_logging": {
+    "enabled": true,
+    "log_directory": "../data",
+    "log_rate": 10,
+    "file_format": "csv",
+    "include_raw_sensors": true,
+    "include_ekf_state": true,
+    "include_control_commands": true,
+    "max_file_size_mb": 100,
+    "rotation_enabled": true,
+    "compression": false
+  },
+  
+  "offline_analysis": {
+    "auto_generate_plots": true,
+    "plot_formats": ["png", "pdf"],
+    "analysis_metrics": [
+      "trajectory",
+      "position_error",
+      "orientation_error",
+      "sensor_noise",
+      "covariance_convergence"
+    ],
+    "report_format": "html",
+    "batch_processing": true
+  },
+  
+  "communication": {
+    "raspberry_pi": {
+      "ip": "192.168.1.100",
+      "ssh_port": 22,
+      "data_port": 5555,
+      "control_port": 5556
+    },
+    "robomaster_s1": {
+      "connection_type": "wifi",
+      "ip": "192.168.2.1",
+      "sdk_port": 40923
+    },
+    "ground_station": {
+      "enabled": false,
+      "ip": "192.168.1.200",
+      "port": 8080,
+      "protocol": "websocket"
+    }
+  },
+  
+  "sensor_mounting": {
+    "iphone": {
+      "position_offset": [0.0, 0.0, 0.1],
+      "rotation_offset": [0.0, 0.0, 0.0],
+      "mount_type": "rigid",
+      "vibration_isolation": false
+    }
+  },
+  
+  "debug": {
+    "verbose_logging": false,
+    "save_raw_data": false,
+    "plot_realtime": false,
+    "console_output": true,
+    "log_level": "INFO"
+  }
+}

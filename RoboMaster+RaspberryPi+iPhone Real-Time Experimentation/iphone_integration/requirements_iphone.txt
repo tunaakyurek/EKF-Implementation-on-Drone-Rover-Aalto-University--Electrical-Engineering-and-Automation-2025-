@@ -1,0 +1,50 @@
+###############################################
+# iPhone Integration Subsystem Requirements
+# For Python 3.11.2
+# These are the minimal requirements for running
+# the iPhone-EKF integration system
+###############################################
+
+# Core scientific computing (Raspberry Pi compatible versions)
+numpy>=1.24.0,<1.25.0        # Array operations and linear algebra
+scipy>=1.10.0,<1.12.0        # Scientific computing (signal processing, stats)
+
+# Data analysis and visualization
+matplotlib>=3.7.0,<3.8.0     # Plotting and visualization
+pandas>=2.0.0,<2.1.0         # Data analysis and CSV handling
+
+# Optional: For 3D visualization
+# mpl_toolkits comes with matplotlib
+
+# Standard library modules used (no pip install needed):
+# - json (JSON data parsing)
+# - logging (Logging system)
+# - time (Timing functions)
+# - threading (Multi-threading support)
+# - queue (Thread-safe queues)
+# - socket (Network communication)
+# - struct (Binary data packing)
+# - dataclasses (Data containers)
+# - typing (Type hints)
+# - enum (Enumerations)
+# - os (Operating system interface)
+# - sys (System-specific parameters)
+# - datetime (Date and time handling)
+# - glob (Unix-style pathname pattern expansion)
+# - unittest (Unit testing framework)
+# - argparse (Command-line argument parsing)
+
+# Installation command:
+# pip install -r requirements_iphone.txt
+
+# For development and testing:
+# pytest==7.4.0        # Testing framework (optional)
+# black==23.3.0        # Code formatting (optional)
+# pylint==2.17.4       # Code linting (optional)
+
+# Notes:
+# 1. These versions are tested with Python 3.11.2
+# 2. For Raspberry Pi deployment, consider using system packages:
+#    sudo apt-get install python3-numpy python3-scipy python3-matplotlib python3-pandas
+# 3. For headless operation (no GUI), you can use:
+#    matplotlib with 'Agg' backend or install matplotlib-headless
