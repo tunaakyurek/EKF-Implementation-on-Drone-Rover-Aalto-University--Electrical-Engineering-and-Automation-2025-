@@ -1,9 +1,7 @@
 #!/usr/bin/env python3
 """
-Offline replay for RoboMaster 8-DOF EKF (exact formulary) using raw CSV logs.
-
-Reads a raw CSV (robomaster_raw_log_*.csv), feeds aligned IMU/GPS to the
-RoboMasterEKF8DOF, and writes an EKF CSV suitable for diagnostics.
+Offline replay for RoboMaster 8-DOF EKF using raw CSV logs.
+Reads raw CSV, feeds aligned IMU/GPS to EKF, writes output for diagnostics.
 """
 
 import argparse
@@ -13,7 +11,6 @@ import math
 import numpy as np
 import pandas as pd
 
-# Ensure project root is on sys.path for absolute imports
 _HERE = os.path.dirname(__file__)
 _PROJECT_ROOT = os.path.abspath(os.path.join(_HERE, '..', '..', '..'))
 if _PROJECT_ROOT not in sys.path:
@@ -23,7 +20,6 @@ from iphone_integration.pi_phone_connection.ekf_robomaster_8dof import RoboMaste
 
 
 def build_online_alignment_matrix() -> np.ndarray:
-    # Match online: R_imu_to_body = Rz(60°) @ RswapXY
     cz, sz = np.cos(np.radians(60.0)), np.sin(np.radians(60.0))
     Rz = np.array([[cz, -sz, 0.0], [sz, cz, 0.0], [0.0, 0.0, 1.0]], dtype=float)
     Rswap = np.array([[0.0, -1.0, 0.0], [1.0, 0.0, 0.0], [0.0, 0.0, 1.0]], dtype=float)
@@ -45,7 +41,6 @@ def replay_8dof(raw_csv: str, output_csv: str) -> str:
     t0 = float(df['timestamp'].iloc[0])
     time_rel = df['timestamp'].to_numpy() - t0
 
-    # Match online EKF config
     ekf_config = {
         'q_accel': 0.1,
         'q_gyro': 0.005,

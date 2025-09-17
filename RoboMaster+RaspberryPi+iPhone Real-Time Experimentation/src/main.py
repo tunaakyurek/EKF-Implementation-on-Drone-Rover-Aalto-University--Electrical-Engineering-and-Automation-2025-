@@ -1,7 +1,4 @@
-"""
-Main integration script for RoboMaster S1 EKF system
-Run this on the Raspberry Pi
-"""
+"""Main integration script for RoboMaster S1 EKF system"""
 
 import time
 import signal
@@ -19,13 +16,8 @@ class EKFSystem:
     """Main EKF system integration class"""
     
     def __init__(self, config_file: str = "config/system_config.json"):
-        # Load configuration
         self.config = self._load_config(config_file)
-        
-        # Initialize components
         self.ekf = ExtendedKalmanFilter()
-        # Apply validated sensor-to-body alignment and yaw offset (from offline diagnostics)
-        # IMU-to-body swap X/Y corresponds to a +90 deg rotation about Z
         import numpy as np
         self.ekf.R_imu_to_body = np.array([
             [0.0, -1.0, 0.0],
@@ -33,25 +25,19 @@ class EKFSystem:
             [0.0,  0.0, 1.0],
         ], dtype=float)
         self.ekf.yaw_mount_offset = np.radians(60.0)
-        # Conservative magnetometer gating/noise (can be tuned further)
         self.ekf.mag_heading_gate_deg = 35.0
         self.ekf.mag_norm_gate_rel = 0.25
         self.ekf.R_mag = np.eye(3) * 2.5
         self.robomaster = RoboMasterClient(callback=self._process_sensor_data)
         self.data_logger = DataLogger(log_directory=self.config.get('log_directory', 'logs'))
-        
-        # Network communication
         network_config = NetworkConfig.load_config()
         self.network_client = NetworkClient(
             ground_pc_ip=network_config['ground_pc_ip'],
             port=network_config['port']
         )
         
-        # System state
         self.is_running = False
         self.start_time = None
-        
-        # Configure logging
         logging.basicConfig(
             level=logging.INFO,
             format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -62,7 +48,6 @@ class EKFSystem:
         )
         self.logger = logging.getLogger(__name__)
         
-        # Setup signal handlers for graceful shutdown
         signal.signal(signal.SIGINT, self._signal_handler)
         signal.signal(signal.SIGTERM, self._signal_handler)
     

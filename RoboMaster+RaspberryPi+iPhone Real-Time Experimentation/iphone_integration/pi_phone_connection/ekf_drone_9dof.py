@@ -1,18 +1,9 @@
 """
 9-DOF Extended Kalman Filter for Full Drone Dynamics
-===================================================
-Complete 6-DOF rigid body dynamics with proper nonlinear modeling
-Following RoboMaster Drone Formulary specifications
 
-State Vector (9-DOF):
-[x, y, z, vx, vy, vz, roll, pitch, yaw]
-
-Implements full nonlinear dynamics with:
-- 6-DOF rigid body motion equations
-- Proper rotation matrix transformations
-- Complete IMU sensor modeling
-- GPS and magnetometer integration
-
+State Vector: [x, y, z, vx, vy, vz, roll, pitch, yaw]
+Implements full nonlinear dynamics with 6-DOF rigid body motion equations,
+rotation matrix transformations, and IMU/GPS/magnetometer integration.
 """
 
 import numpy as np

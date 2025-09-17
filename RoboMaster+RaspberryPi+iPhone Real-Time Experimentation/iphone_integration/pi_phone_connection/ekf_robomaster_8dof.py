@@ -1,21 +1,12 @@
 """
 RoboMaster 8-DOF Extended Kalman Filter Implementation
-=====================================================
-Following EXACT RoboMaster EKF Formulary specifications
-As specified in RoboMaster_Formulary.pdf
 
-State Vector (8-DOF):
-[x, y, theta, vx, vy, bias_accel_x, bias_accel_y, bias_angular_velocity]
-
-Where:
+State Vector: [x, y, theta, vx, vy, bias_accel_x, bias_accel_y, bias_angular_velocity]
 - x, y: Position in global frame (meters)
 - theta: Yaw angle (radians)
-- vx, vy: Velocity in global frame (m/s)
+- vx, vy: Velocity in global frame (m/s)  
 - bias_accel_x, bias_accel_y: Accelerometer biases (m/s²)
 - bias_angular_velocity: Gyroscope bias (rad/s)
-
-Author: RoboMaster EKF Integration System
-Date: 2025
 """
 
 import numpy as np
@@ -30,28 +21,18 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class RoboMasterState:
-    """
-    RoboMaster 8-DOF EKF state vector
-    Following exact formulary specifications
-    """
-    # Position (2-DOF)
+    """RoboMaster 8-DOF EKF state vector"""
     x: float                    # meters (global X position)
     y: float                    # meters (global Y position)
-    
-    # Orientation (1-DOF)
     theta: float                # radians (yaw angle)
-    
-    # Velocity (2-DOF)
     vx: float                   # m/s (global X velocity)
     vy: float                   # m/s (global Y velocity)
-    
-    # Sensor biases (3-DOF)
     bias_accel_x: float         # m/s² (accelerometer X bias)
     bias_accel_y: float         # m/s² (accelerometer Y bias)
     bias_angular_velocity: float # rad/s (gyroscope Z bias)
     
     def to_array(self) -> np.ndarray:
-        """Convert to numpy array following formulary order"""
+        """Convert to numpy array"""
         return np.array([
             self.x, self.y, self.theta,
             self.vx, self.vy,
@@ -90,25 +71,15 @@ class RoboMasterState:
 class RoboMasterEKF8DOF:
     """
     RoboMaster 8-DOF Extended Kalman Filter
-    Implements exact formulary specifications from RoboMaster_Formulary.pdf
-    
     State vector: [x, y, theta, vx, vy, bias_ax, bias_ay, bias_omega]
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """
-        Initialize RoboMaster 8-DOF EKF following formulary specifications
-        
-        Args:
-            config: Configuration dictionary with noise parameters
-        """
+        """Initialize RoboMaster 8-DOF EKF with configuration parameters"""
         self.n_states = 8
         config = config or {}
         
-        # State vector initialization
         self.x = np.zeros(self.n_states)
-        
-        # Initial state covariance P (following formulary)
         self.P = np.eye(self.n_states)
         self.P[0:2, 0:2] *= config.get('init_pos_var', 0.5)      # Reduced from 1.0 - start with less position uncertainty
         self.P[2, 2] = config.get('init_theta_var', 0.05)         # Reduced from 0.1 - start with less orientation uncertainty  

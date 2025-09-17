@@ -1,17 +1,11 @@
 """
 RoboMaster S1 Autonomous Control Module
-========================================
-Integrates EKF state estimates for autonomous navigation
-Following RoboMaster EKF Formulary specifications
 
-This module provides autonomous control capabilities:
+Integrates EKF state estimates for autonomous navigation with capabilities:
 - Waypoint navigation
-- Path following
+- Path following  
 - Obstacle avoidance
 - State-based control
-
-Author: RoboMaster EKF Integration System
-Date: 2025
 """
 
 import numpy as np
@@ -23,7 +17,6 @@ from enum import Enum
 import threading
 import queue
 
-# Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
@@ -61,21 +54,11 @@ class ControlCommand:
 
 
 class PIDController:
-    """
-    PID controller for position and attitude control
-    """
+    """PID controller for position and attitude control"""
     
     def __init__(self, kp: float, ki: float, kd: float, 
                  output_limit: Optional[Tuple[float, float]] = None):
-        """
-        Initialize PID controller
-        
-        Args:
-            kp: Proportional gain
-            ki: Integral gain
-            kd: Derivative gain
-            output_limit: Optional output limits (min, max)
-        """
+        """Initialize PID controller with gains and optional output limits"""
         self.kp = kp
         self.ki = ki
         self.kd = kd

@@ -1,15 +1,8 @@
 """
 iPhone Sensor Data Receiver for Raspberry Pi
-=============================================
-Receives sensor data from iPhone mounted on the drone
-Following RoboMaster EKF Formulary specifications
 
-This module handles the connection and data reception from iPhone sensors
-via WebSocket or HTTP API, converting the data to the format required
-by the 8-DOF EKF algorithm.
-
-Author: RoboMaster EKF Integration System
-Date: 2025
+Receives sensor data from iPhone via WebSocket or HTTP API, converting
+the data to the format required by the 8-DOF EKF algorithm.
 """
 
 import json
@@ -22,7 +15,6 @@ import struct
 import threading
 import queue
 
-# Configure logging
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
@@ -32,10 +24,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class iPhoneSensorData:
-    """
-    Container for iPhone sensor measurements
-    All data in SI units following EKF Formulary specifications
-    """
+    """Container for iPhone sensor measurements (SI units)"""
     timestamp: float
     
     # Motion sensors (required for 8-DOF EKF)

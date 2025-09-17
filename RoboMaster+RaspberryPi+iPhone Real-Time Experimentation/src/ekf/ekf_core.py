@@ -1,13 +1,8 @@
 """
-Extended Kalman Filter implementation for RoboMaster S1 state estimation.
-Based on RoboMaster EKF Formulary specifications.
-
-This implementation follows the mathematical expressions and state definitions
-outlined in the RoboMaster EKF Formulary document.
+Extended Kalman Filter for RoboMaster S1 state estimation.
 
 State Vector: [x, y, z, vx, vy, vz, roll, pitch, yaw, wx, wy, wz] (12D)
 Sensors: IMU (accelerometer, gyroscope), GPS, Barometer, Magnetometer
-Reference: RoboMaster EKF Formulary v1.0
 """
 
 import numpy as np
@@ -17,7 +12,7 @@ import time
 
 @dataclass
 class SensorData:
-    """Container for all sensor measurements as per RoboMaster Formulary"""
+    """Container for all sensor measurements"""
     timestamp: float
     # IMU data (body frame)
     accel: np.ndarray  # [ax, ay, az] in m/s²
@@ -39,9 +34,7 @@ class SensorData:
 @dataclass
 class EKFState:
     """
-    EKF state vector as per RoboMaster Formulary:
-    [x, y, z, vx, vy, vz, roll, pitch, yaw, wx, wy, wz]
-    
+    EKF state vector: [x, y, z, vx, vy, vz, roll, pitch, yaw, wx, wy, wz]
     All quantities in NED (North-East-Down) coordinate frame
     """
     position: np.ndarray     # [x, y, z] in meters (NED)
@@ -50,7 +43,7 @@ class EKFState:
     angular_velocity: np.ndarray  # [wx, wy, wz] in rad/s (body frame)
     
     def to_vector(self) -> np.ndarray:
-        """Convert state to 12D vector as per formulary"""
+        """Convert state to 12D vector"""
         return np.concatenate([
             self.position, 
             self.velocity, 
@@ -60,7 +53,7 @@ class EKFState:
     
     @classmethod
     def from_vector(cls, vec: np.ndarray) -> 'EKFState':
-        """Create state from 12D vector as per formulary"""
+        """Create state from 12D vector"""
         return cls(
             position=vec[0:3],
             velocity=vec[3:6],
@@ -71,24 +64,16 @@ class EKFState:
 class ExtendedKalmanFilter:
     """
     Extended Kalman Filter for RoboMaster S1 state estimation
-    Following RoboMaster EKF Formulary specifications
-    
     State: [x, y, z, vx, vy, vz, roll, pitch, yaw, wx, wy, wz] (12D)
     Coordinate Frame: NED (North-East-Down)
     """
     
     def __init__(self):
-        # State dimension as per formulary
         self.n_states = 12
+        self.x = np.zeros(self.n_states)
+        self.P = np.eye(self.n_states) * 1.0
         
-        # Initialize state and covariance
-        self.x = np.zeros(self.n_states)  # State vector
-        self.P = np.eye(self.n_states) * 1.0  # Covariance matrix
-        
-        # Process noise covariance as per formulary
         self.Q = self._create_process_noise_matrix()
-        
-        # Measurement noise covariances as per formulary
         self.R_imu = np.eye(6) * 0.1  # IMU: [ax, ay, az, wx, wy, wz]
         self.R_mag = np.eye(3) * 0.5  # Magnetometer: [mx, my, mz]
         self.R_baro = np.array([[0.1]])  # Barometer: [altitude]

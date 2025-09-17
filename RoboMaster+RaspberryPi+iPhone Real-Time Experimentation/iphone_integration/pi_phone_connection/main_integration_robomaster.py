@@ -1,12 +1,6 @@
 """
-RoboMaster iPhone-EKF Integration System
-========================================
-Main integration using EXACT RoboMaster 8-DOF EKF from formulary
+RoboMaster iPhone-EKF Integration System using 8-DOF EKF.
 State vector: [x, y, theta, vx, vy, bias_accel_x, bias_accel_y, bias_angular_velocity]
-
-This is the official implementation following RoboMaster_Formulary.pdf
-Author: RoboMaster EKF Integration System
-Date: 2025
 """
 
 import json
@@ -20,14 +14,12 @@ from datetime import datetime
 from typing import Optional, Dict, Any
 import numpy as np
 
-# Configure logging
 logging.basicConfig(
     level=logging.INFO,  # Use INFO level for cleaner output
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 )
 logger = logging.getLogger(__name__)
 
-# Import our modules
 try:
     from .iphone_sensor_receiver import iPhoneDataReceiver, iPhoneDataProcessor, iPhoneSensorData
     from .ekf_robomaster_8dof import RoboMasterEKF8DOF, RoboMasterState
@@ -35,7 +27,6 @@ except ImportError:
     from iphone_sensor_receiver import iPhoneDataReceiver, iPhoneDataProcessor, iPhoneSensorData
     from ekf_robomaster_8dof import RoboMasterEKF8DOF, RoboMasterState
 
-# Optional autonomous controller
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'robomaster_control'))
 try:
     from autonomous_controller import AutonomousController, ControlMode, Waypoint
@@ -46,21 +37,11 @@ except ImportError:
 
 
 class RoboMasterEKFIntegration:
-    """
-    RoboMaster iPhone-EKF integration using exact formulary implementation
-    """
+    """RoboMaster iPhone-EKF integration using 8-DOF EKF"""
     
     def __init__(self, config_file: Optional[str] = None):
-        """
-        Initialize the RoboMaster integration system
-        
-        Args:
-            config_file: Path to configuration file
-        """
-        # Load configuration
+        """Initialize the RoboMaster integration system"""
         self.config = self._load_config(config_file)
-        
-        # Initialize sensor components
         self.receiver = iPhoneDataReceiver(
             connection_type=self.config.get('connection_type', 'udp'),
             port=self.config.get('port', 5555),

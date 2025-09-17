@@ -1,12 +1,6 @@
 """
 Enhanced Main Integration Module for iPhone-EKF System
-======================================================
-Using 9-DOF Full Drone EKF with complete dynamics:
-- 9-DOF Full Drone EKF: [x, y, z, vx, vy, vz, roll, pitch, yaw]
-
-Follows RoboMaster EKF Formulary specifications with proper sensor integration
-Author: RoboMaster EKF Integration System
-Date: 2025
+Using 9-DOF Full Drone EKF: [x, y, z, vx, vy, vz, roll, pitch, yaw]
 """
 
 import json
